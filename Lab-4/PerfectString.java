@@ -33,9 +33,9 @@ public class PerfectString {
         String input = sc.nextLine();
 
         if (isPerfect(input))
-            System.out.println("Perfect String ✅");
+            System.out.println("Perfect String ");
         else
-            System.out.println("Not Perfect ❌");
+            System.out.println("Not Perfect ");
 
         sc.close();
     }
