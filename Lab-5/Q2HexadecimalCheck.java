@@ -41,7 +41,8 @@ class HexadecimalCheck {
             checkHex(number);
             System.out.println("It is a Hexadecimal Number.");
 
-        } catch (NotHexException e) {
+        } 
+        catch (NotHexException e) {
             System.out.println("Exception: " + e.getMessage());
         }
 
