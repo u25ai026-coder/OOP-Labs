@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(javac *.java)",
+      "Bash(java Q1_FileHandlingTheSubstring)",
+      "Bash(java Q2_VowelPositionPrinter)",
+      "Bash(java Q3_NameProcessor)",
+      "Bash(java Q4_CapitalizeWords)",
+      "Bash(java Q5_FileWordReplace)",
+      "Bash(java Q1_ThreadExtend)",
+      "Bash(java Q2_ThreadRunnable)",
+      "Bash(java Q3_SinCosThreads)",
+      "Bash(java Q5_PolishNotation)",
+      "Bash(java Q6_PrimeFibonacci)",
+      "Bash(java Q4_NumberGame)",
+      "Bash(timeout 10 java Q7_BankAccount)",
+      "Bash(java -version)",
+      "Bash(java Q3_PaintTool)",
+      "Bash(java Q2_ImageAudio)"
+    ]
+  }
+}
