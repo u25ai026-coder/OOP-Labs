@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Smart Parking System — UML Class Diagram</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0f0f1a;color:#cdd6f4;font-family:'Consolas','Courier New',monospace;font-size:12px;padding:24px}
+  h1{text-align:center;color:#89b4fa;font-size:1.5rem;margin-bottom:4px;font-family:'Segoe UI',sans-serif}
+  .subtitle{text-align:center;color:#585b70;margin-bottom:28px;font-family:'Segoe UI',sans-serif;font-size:.85rem}
+
+  /* ── Layout ─────────────────────────────────────────── */
+  .section-label{color:#585b70;font-size:.7rem;text-transform:uppercase;letter-spacing:2px;margin:28px 0 10px;font-family:'Segoe UI',sans-serif;border-bottom:1px solid #1e1e2e;padding-bottom:4px}
+  .row{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:4px}
+
+  /* ── UML Box ─────────────────────────────────────────── */
+  .box{border:1.5px solid #45475a;border-radius:4px;min-width:210px;max-width:280px;flex:1}
+  .box.abstract{border-color:#cba6f7}
+  .box.interface{border-color:#94e2d5}
+  .box.enum{border-color:#f9e2af}
+  .box.singleton{border-color:#89b4fa}
+  .box.utility{border-color:#fab387}
+  .box.exception{border-color:#f38ba8}
+  .box.db{border-color:#89dceb}
+  .box.gui{border-color:#a6e3a1}
+
+  .box-head{padding:6px 10px;text-align:center;border-bottom:1px solid #313244}
+  .box.abstract .box-head{background:#1e1433}
+  .box.interface .box-head{background:#0d2626}
+  .box.enum .box-head{background:#2a2010}
+  .box.singleton .box-head{background:#0d1a33}
+  .box.utility .box-head{background:#2a1a0d}
+  .box.exception .box-head{background:#2a0d0d}
+  .box.db .box-head{background:#0d2233}
+  .box.gui .box-head{background:#0d2a16}
+  .box-head:not(.abstract):not(.interface):not(.enum):not(.singleton):not(.utility):not(.exception):not(.db):not(.gui){background:#1e1e2e}
+
+  .stereotype{display:block;font-size:9px;color:#a6adc8;font-style:italic;margin-bottom:1px}
+  .classname{display:block;font-weight:bold;font-size:13px;color:#cdd6f4}
+  .box.abstract .classname{color:#cba6f7;font-style:italic}
+  .box.interface .classname{color:#94e2d5}
+  .box.enum .classname{color:#f9e2af}
+  .box.singleton .classname{color:#89b4fa}
+  .box.utility .classname{color:#fab387}
+  .box.exception .classname{color:#f38ba8}
+  .box.db .classname{color:#89dceb}
+  .box.gui .classname{color:#a6e3a1}
+
+  .box-fields,.box-methods{padding:5px 10px}
+  .divider{border-top:1px dashed #313244;margin:2px 0}
+  .field{color:#cdd6f4;line-height:1.6}
+  .method{color:#a6e3a1;line-height:1.6}
+  .field .vis{color:#f38ba8}
+  .method .vis{color:#89b4fa}
+  .field .type{color:#fab387}
+  .method .ret{color:#fab387}
+  .note{color:#585b70;font-size:10px;font-style:italic;padding:3px 10px 5px}
+
+  /* ── Relationships Table ──────────────────────────────── */
+  .rel-table{width:100%;border-collapse:collapse;margin-top:8px}
+  .rel-table th{background:#1e1e2e;color:#89b4fa;padding:7px 12px;text-align:left;font-size:.75rem;text-transform:uppercase;letter-spacing:1px}
+  .rel-table td{padding:5px 12px;border-bottom:1px solid #1e1e2e;color:#cdd6f4;font-size:.8rem}
+  .rel-table tr:hover td{background:#1e1e2e}
+  .rel-sym{font-size:1rem;font-weight:bold}
+  .inh{color:#cba6f7}
+  .impl{color:#94e2d5}
+  .comp{color:#89b4fa}
+  .assoc{color:#a6e3a1}
+  .dep{color:#f9e2af}
+
+  /* ── Legend ───────────────────────────────────────────── */
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;justify-content:center}
+  .leg{padding:4px 12px;border-radius:20px;font-size:.75rem;font-family:'Segoe UI',sans-serif}
+</style>
+</head>
+<body>
+
+<h1>Smart Parking System — UML Class Diagram</h1>
+<p class="subtitle">Final Project &nbsp;·&nbsp; Java + Swing + SQLite &nbsp;·&nbsp; Singleton · Factory · Strategy patterns</p>
+
+<!-- ═══════════════════ VEHICLE HIERARCHY ═══════════════════ -->
+<div class="section-label">Vehicle Hierarchy (Inheritance)</div>
+<div class="row">
+
+  <div class="box abstract">
+    <div class="box-head">
+      <span class="stereotype">&laquo;abstract&raquo;</span>
+      <span class="classname">Vehicle</span>
+    </div>
+    <div class="box-fields">
+      <div class="field"><span class="vis">-</span> <span class="type">String</span> numberPlate</div>
+      <div class="field"><span class="vis">-</span> <span class="type">String</span> color</div>
+      <div class="field"><span class="vis">-</span> <span class="type">SlotType</span> requiredSlotType</div>
+      <div class="field"><span class="vis">-</span> <span class="type">LocalDateTime</span> entryTime</div>
+      <div class="field"><span class="vis">-</span> <span class="type">String</span> paymentMode</div>
+    </div>
+    <div class="divider"></div>
+    <div class="box-methods">
+      <div class="method"><span class="vis">+</span> getHourlyRate() <span class="ret">double</span> &lt;abstract&gt;</div>
+      <div class="method"><span class="vis">+</span> getVehicleTypeName() <span class="ret">String</span> &lt;abstract&gt;</div>
+      <div class="method"><span class="vis">+</span> setEntryTime(LocalDateTime)</div>
+      <div class="method"><span class="vis">+</span> setPaymentMode(String)</div>
+      <div class="method"><span class="vis">+</span> getNumberPlate() <span class="ret">String</span></div>
+      <div class="method"><span class="vis">+</span> getColor() <span class="ret">String</span></div>
+      <div class="method"><span class="vis">+</span> getEntryTime() <span class="ret">LocalDateTime</span></div>
+      <div class="method"><span class="vis">+</span> getRequiredSlotType() <span class="ret">SlotType</span></div>
+      <div class="method"><span class="vis">+</span> getPaymentMode() <span class="ret">String</span></div>
+      <div class="method"><span class="vis">+</span> getFormattedEntryTime() <span class="ret">String</span></div>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-head">
+      <span class="stereotype">extends Vehicle</span>
+      <span class="classname">Car</span>
+    </div>
+    <div class="note">Hourly rate: Rs.60 &nbsp;·&nbsp; Slot: MEDIUM</div>
+    <div class="divider"></div>
+    <div class="box-methods">
+      <div class="method"><span class="vis">+</span> getHourlyRate() <span class="ret">double</span></div>
+      <div class="method"><span class="vis">+</span> getVehicleTypeName() <span class="ret">String</span></div>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-head">
+      <span class="stereotype">extends Vehicle</span>
+      <span class="classname">Motorcycle</span>
+    </div>
+    <div class="note">Hourly rate: Rs.30 &nbsp;·&nbsp; Slot: SMALL</div>
+    <div class="divider"></div>
+    <div class="box-methods">
+      <div class="method"><span class="vis">+</span> getHourlyRate() <span class="ret">double</span></div>
+      <div class="method"><span class="vis">+</span> getVehicleTypeName() <span class="ret">String</span></div>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-head">
+      <span class="stereotype">extends Vehicle</span>
+      <span class="classname">Truck</span>
+    </div>
+    <div class="note">Hourly rate: Rs.100 &nbsp;·&nbsp; Slot: LARGE</div>
+    <div class="divider"></div>
+    <div class="box-methods">
+      <div class="method"><span class="vis">+</span> getHourlyRate() <span class="ret">double</span></div>
+      <div class="method"><span class="vis">+</span> getVehicleTypeName() <span class="ret">String</span></div>
+    </div>
+  </div>
+
+  <div class="box enum">
+    <div class="box-head">
+      <span class="stereotype">&laquo;enumeration&raquo;</span>
+      <span class="classname">SlotType</span>
+    </div>
+    <div class="box-fields">
+      <div class="field">SMALL</div>
+      <div class="field">MEDIUM</div>
+      <div class="field">LARGE</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════ CORE PARKING MODEL ═══════════════════ -->
+<div class="section-label">Core Parking Model</div>
+<div class="row">
+
+  <div class="box">
+    <div class="box-head">
+      <span class="classname">ParkingSlot</span>
+    </div>
+    <div class="box-fields">
+      <div class="field"><span class="vis">-</span> <span class="type">String</span> slotId</div>
+      <div class="field"><span class="vis">-</span> <span class="type">SlotType</span> slotType</div>
+      <div class="field"><span class="vis">-</span> <span class="type">Vehicle</span> currentVehicle</div>
+    </div>
+    <div class="divider"></div>
+    <div class="box-methods">
+      <div class="method"><span class="vis">+</span> assignVehicle(Vehicle) <span class="ret">void</span></div>
+      <div class="method"><span class="vis">+</span> removeVehicle() <span class="ret">void</span></div>
+      <div class="method"><span class="vis">+</span> getSlotId() <span class="ret">String</span></div>
+      <div class="method"><span class="vis">+</span> getSlotType() <span class="ret">SlotType</span></div>
+      <div class="method"><span class="vis">+</span> getCurrentVehicle() <span class="ret">Vehicle</span></div>
+      <div class="method"><span class="vis">+</span> isEmpty() <span class="ret">boolean</span></div>
+      <div class="method"><span class="vis">+</span> getMapDisplay() <span class="ret">String</span></div>
+    </div>
+  </div>
+
+  <div class="box singleton">
+    <div class="box-head">
+      <span class="stereotype">&laquo;Singleton&raquo;</span>
+      <span class="classname">ParkingLot</span>
+    </div>
+    <div class="box-fields">
+      <div class="field"><span class="vis">-</span> <span class="type">ParkingLot</span> instance &lt;static&gt;</div>
+      <div class="field"><span class="vis">-</span> <span class="type">String</span> lotName</div>
+      <div class="field"><span class="vis">-</span> <span class="type">List&lt;ParkingSlot&gt;</span> smallSlots</div>
+      <div class="field"><span class="vis">-</span> <span class="type">List&lt;ParkingSlot&gt;</span> mediumSlots</div>
+      <div class="field"><span class="vis">-</span> <span class="type">List&lt;ParkingSlot&gt;</span> largeSlots</div>
+      <div class="field"><span class="vis">-</span> <span class="type">DatabaseManager</span> db</div>
+      <div class="field"><span class="vis">-</span> <span class="type">HourlyRateStrategy</span> feeStrategy</div>
+      <div class="field"><span class="vis">-</span> <span class="type">int</span> totalParkedToday</div>
+      <div class="field"><span class="vis">-</span> <span class="type">int</span> totalCheckedOut</div>
+    </div>
+    <div class="divider"></div>
+    <div class="box-methods">
+      <div class="method"><span class="vis">+</span> getInstance(String,int,int,int) <span class="ret">ParkingLot</span> &lt;static&gt;</div>
+      <div class="method"><span class="vis">+</span> parkVehicle(Vehicle) <span class="ret">String</span></div>
+      <div class="method"><span class="vis">+</span> unparkByNumberPlate(String,String) <span class="ret">String</span></div>
+      <div class="method"><span class="vis">+</span> unparkBySlotId(String,String) <span class="ret">String</span></div>
+      <div class="method"><span class="vis">+</span> saveSessionToDatabase() <span class="ret">void</span></div>
+      <div class="method"><span class="vis">+</span> getLotName() <span class="ret">String</span></div>
+      <div class="method"><span class="vis">+</span> getSmallSlots() <span class="ret">List</span></div>
+      <div class="method"><span class="vis">+</span> getMediumSlots() <span class="ret">List</span></div>
+      <div class="method"><span class="vis">+</span> getLargeSlots() <span class="ret">List</span></div>
+      <div class="method"><span class="vis">+</span> getTotalParkedToday() <span class="ret">int</span></div>
+      <div class="method"><span class="vis">+</span> getTotalCheckedOut() <span class="ret">int</span></div>
+      <div class="method"><span class="vis">+</span> getCurrentlyParkedCount() <span class="ret">int</span></div>
+      <div class="method"><span class="vis">+</span> getCarsServed() <span class="ret">int</span></div>
+      <div class="method"><span class="vis">+</span> getMotorcyclesServed() <span class="ret">int</span></div>
+      <div class="method"><span class="vis">+</span> getTrucksServed() <span class="ret">int</span></div>
+    </div>
+  </div>
+
+  <div class="box utility">
+    <div class="box-head">
+      <span class="stereotype">&laquo;utility&raquo;</span>
+      <span class="classname">VehicleFactory</span>
+    </div>
+    <div class="box-methods">
+      <div class="method"><span class="vis">+</span> createVehicle(String,String,String) <span class="ret">Vehicle</span> &lt;static&gt;</div>
+      <div class="method"><span class="vis">+</span> getSupportedTypes() <span class="ret">String[]</span> &lt;static&gt;</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════ STRATEGY PATTERN ═══════════════════ -->
+<div class="section-label">Strategy Pattern &amp; Exceptions</div>
+<div class="row">
+
+  <div class="box interface">
+    <div class="box-head">
+      <span class="stereotype">&laquo;interface&raquo;</span>
+      <span class="classname">ParkingFeeStrategy</span>
+    </div>
+    <div class="box-methods">
+      <div class="method"><span class="vis">+</span> calculateFee(Vehicle, LocalDateTime) <span class="ret">double</span></div>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-head">
+      <span class="stereotype">implements ParkingFeeStrategy</span>
+      <span class="classname">HourlyRateStrategy</span>
+    </div>
+    <div class="note">Min charge: 1 hour</div>
+    <div class="divider"></div>
+    <div class="box-methods">
+      <div class="method"><span class="vis">+</span> calculateFee(Vehicle, LocalDateTime) <span class="ret">double</span></div>
+    </div>
+  </div>
+
+  <div class="box exception">
+    <div class="box-head">
+      <span class="stereotype">&laquo;exception&raquo;</span>
+      <span class="classname">ParkingFullException</span>
+    </div>
+    <div class="note">Thrown when no slot available</div>
+  </div>
+
+  <div class="box exception">
+    <div class="box-head">
+      <span class="stereotype">&laquo;exception&raquo;</span>
+      <span class="classname">VehicleNotFoundException</span>
+    </div>
+    <div class="note">Thrown when plate/slot not found</div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════ DATABASE ═══════════════════ -->
+<div class="section-label">Database Layer</div>
+<div class="row">
+
+  <div class="box db">
+    <div class="box-head">
+      <span class="stereotype">&laquo;database&raquo;</span>
+      <span class="classname">DatabaseManager</span>
+    </div>
+    <div class="box-fields">
+      <div class="field"><span class="vis">-</span> <span class="type">Connection</span> conn</div>
+      <div class="field"><span class="vis">-</span> <span class="type">String</span> DB_URL &lt;static&gt;</div>
+    </div>
+    <div class="divider"></div>
+    <div class="box-methods">
+      <div class="method"><span class="vis">+</span> saveLastSession(13 params) <span class="ret">void</span></div>
+      <div class="method"><span class="vis">+</span> loadLastSession() <span class="ret">ResultSet</span></div>
+      <div class="method"><span class="vis">+</span> saveParkedVehicle(slotId,type,plate,color,time) <span class="ret">void</span></div>
+      <div class="method"><span class="vis">+</span> deleteParkedVehicle(String) <span class="ret">void</span></div>
+      <div class="method"><span class="vis">+</span> loadAllParkedVehicles() <span class="ret">ResultSet</span></div>
+      <div class="method"><span class="vis">+</span> isConnected() <span class="ret">boolean</span></div>
+      <div class="method"><span class="vis">+</span> close() <span class="ret">void</span></div>
+    </div>
+    <div class="note">Tables: parked_vehicles, last_session (SQLite)</div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════ GUI LAYER ═══════════════════ -->
+<div class="section-label">GUI Layer (Swing)</div>
+<div class="row">
+
+  <div class="box gui">
+    <div class="box-head">
+      <span class="classname">Main</span>
+    </div>
+    <div class="box-methods">
+      <div class="method"><span class="vis">+</span> main(String[]) <span class="ret">void</span> &lt;static&gt;</div>
+    </div>
+    <div class="note">Entry point — creates ParkingLot + MainWindow</div>
+  </div>
+
+  <div class="box gui">
+    <div class="box-head">
+      <span class="stereotype">extends JFrame</span>
+      <span class="classname">MainWindow</span>
+    </div>
+    <div class="note">Dark sidebar nav + CardLayout content area</div>
+    <div class="divider"></div>
+    <div class="box-methods">
+      <div class="method"><span class="vis">+</span> showPanel(String) <span class="ret">void</span></div>
+      <div class="method"><span class="vis">+</span> refreshDashboard() <span class="ret">void</span></div>
+      <div class="method"><span class="vis">-</span> buildUI(ParkingLot) <span class="ret">void</span></div>
+      <div class="method"><span class="vis">-</span> makeNavButton(String,String) <span class="ret">JButton</span></div>
+    </div>
+  </div>
+
+  <div class="box gui">
+    <div class="box-head">
+      <span class="stereotype">extends JPanel</span>
+      <span class="classname">DashboardPanel</span>
+    </div>
+    <div class="note">Visual slot map — green=free, red=occupied</div>
+    <div class="divider"></div>
+    <div class="box-methods">
+      <div class="method"><span class="vis">+</span> refresh() <span class="ret">void</span></div>
+      <div class="method"><span class="vis">-</span> fillGrid(JPanel, List) <span class="ret">void</span></div>
+      <div class="method"><span class="vis">-</span> updateStatusLine() <span class="ret">void</span></div>
+    </div>
+  </div>
+
+  <div class="box gui">
+    <div class="box-head">
+      <span class="stereotype">extends JPanel</span>
+      <span class="classname">ParkingPanel</span>
+    </div>
+    <div class="note">Form to park a vehicle</div>
+    <div class="divider"></div>
+    <div class="box-methods">
+      <div class="method"><span class="vis">-</span> handlePark() <span class="ret">void</span></div>
+      <div class="method"><span class="vis">-</span> makeFormLabel(String) <span class="ret">JLabel</span></div>
+    </div>
+  </div>
+
+  <div class="box gui">
+    <div class="box-head">
+      <span class="stereotype">extends JPanel</span>
+      <span class="classname">UnparkPanel</span>
+    </div>
+    <div class="note">Checkout by slot ID or number plate</div>
+    <div class="divider"></div>
+    <div class="box-methods">
+      <div class="method"><span class="vis">-</span> handleUnpark() <span class="ret">void</span></div>
+      <div class="method"><span class="vis">-</span> isSlotId(String) <span class="ret">boolean</span></div>
+    </div>
+  </div>
+
+  <div class="box gui">
+    <div class="box-head">
+      <span class="stereotype">extends JPanel</span>
+      <span class="classname">SummaryPanel</span>
+    </div>
+    <div class="note">Current session stats (live)</div>
+    <div class="divider"></div>
+    <div class="box-methods">
+      <div class="method"><span class="vis">+</span> refresh() <span class="ret">void</span></div>
+      <div class="method"><span class="vis">-</span> updateRow(int,String,int,double,double) <span class="ret">void</span></div>
+    </div>
+  </div>
+
+  <div class="box gui">
+    <div class="box-head">
+      <span class="stereotype">extends JPanel</span>
+      <span class="classname">LastSessionPanel</span>
+    </div>
+    <div class="note">Previous session from SQLite</div>
+    <div class="divider"></div>
+    <div class="box-methods">
+      <div class="method"><span class="vis">+</span> refresh() <span class="ret">void</span></div>
+      <div class="method"><span class="vis">-</span> showNoData() <span class="ret">void</span></div>
+      <div class="method"><span class="vis">-</span> updateRow(int,String,int,double,double) <span class="ret">void</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════ RELATIONSHIPS ═══════════════════ -->
+<div class="section-label">Relationships</div>
+<table class="rel-table">
+  <thead>
+    <tr><th>From</th><th>Symbol</th><th>To</th><th>Type</th><th>Label</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Car, Motorcycle, Truck</td><td><span class="rel-sym inh">▷──</span></td><td>Vehicle</td><td>Inheritance</td><td>extends (override getHourlyRate, getVehicleTypeName)</td></tr>
+    <tr><td>HourlyRateStrategy</td><td><span class="rel-sym impl">◇ ···</span></td><td>ParkingFeeStrategy</td><td>Realisation</td><td>implements interface</td></tr>
+    <tr><td>ParkingLot</td><td><span class="rel-sym comp">◆──</span></td><td>ParkingSlot (×27)</td><td>Composition</td><td>manages 16 small + 8 medium + 3 large slots</td></tr>
+    <tr><td>MainWindow</td><td><span class="rel-sym comp">◆──</span></td><td>5 Panels</td><td>Composition</td><td>Dashboard, Parking, Unpark, Summary, LastSession</td></tr>
+    <tr><td>ParkingSlot</td><td><span class="rel-sym assoc">───</span></td><td>Vehicle</td><td>Association</td><td>currentVehicle (nullable)</td></tr>
+    <tr><td>ParkingSlot</td><td><span class="rel-sym assoc">───</span></td><td>SlotType</td><td>Association</td><td>slotType</td></tr>
+    <tr><td>Vehicle</td><td><span class="rel-sym assoc">───</span></td><td>SlotType</td><td>Association</td><td>requiredSlotType</td></tr>
+    <tr><td>ParkingLot</td><td><span class="rel-sym assoc">───</span></td><td>DatabaseManager</td><td>Association</td><td>uses for persistence</td></tr>
+    <tr><td>ParkingLot</td><td><span class="rel-sym assoc">───</span></td><td>HourlyRateStrategy</td><td>Association</td><td>feeStrategy field</td></tr>
+    <tr><td>ParkingLot</td><td><span class="rel-sym dep">···▷</span></td><td>VehicleFactory</td><td>Dependency</td><td>uses to create vehicles</td></tr>
+    <tr><td>ParkingLot</td><td><span class="rel-sym dep">···▷</span></td><td>ParkingFullException</td><td>Dependency</td><td>throws when no slots available</td></tr>
+    <tr><td>ParkingLot</td><td><span class="rel-sym dep">···▷</span></td><td>VehicleNotFoundException</td><td>Dependency</td><td>throws when plate/slot not found</td></tr>
+    <tr><td>Main</td><td><span class="rel-sym dep">···▷</span></td><td>ParkingLot, MainWindow</td><td>Dependency</td><td>initialises both at startup</td></tr>
+    <tr><td>All Panels</td><td><span class="rel-sym assoc">───</span></td><td>ParkingLot</td><td>Association</td><td>read/update shared state</td></tr>
+    <tr><td>ParkingPanel, UnparkPanel</td><td><span class="rel-sym assoc">───</span></td><td>MainWindow</td><td>Association</td><td>trigger refreshDashboard after action</td></tr>
+  </tbody>
+</table>
+
+<!-- ═══════════════════ LEGEND ═══════════════════ -->
+<div class="legend">
+  <span class="leg" style="background:#1e1433;color:#cba6f7;border:1px solid #cba6f7">Abstract class</span>
+  <span class="leg" style="background:#0d2626;color:#94e2d5;border:1px solid #94e2d5">Interface</span>
+  <span class="leg" style="background:#2a2010;color:#f9e2af;border:1px solid #f9e2af">Enumeration</span>
+  <span class="leg" style="background:#0d1a33;color:#89b4fa;border:1px solid #89b4fa">Singleton</span>
+  <span class="leg" style="background:#2a1a0d;color:#fab387;border:1px solid #fab387">Utility</span>
+  <span class="leg" style="background:#2a0d0d;color:#f38ba8;border:1px solid #f38ba8">Exception</span>
+  <span class="leg" style="background:#0d2233;color:#89dceb;border:1px solid #89dceb">Database</span>
+  <span class="leg" style="background:#0d2a16;color:#a6e3a1;border:1px solid #a6e3a1">GUI / Swing</span>
+</div>
+
+</body>
+</html>
